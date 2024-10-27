@@ -40,7 +40,7 @@ public class MyCustomView extends View {
         paint.setColor(Color.LTGRAY);
         canvas.drawPath(getRoofPath(houseLeft, houseTop, houseRight), paint);
 
-        // Рисуем окно
+        // Рисуем квадратное окно
         paint.setColor(Color.DKGRAY);
         int windowLeft = houseLeft + 40;
         int windowTop = houseTop + 40;
@@ -48,7 +48,7 @@ public class MyCustomView extends View {
         int windowBottom = windowTop + 80;
         canvas.drawRect(windowLeft, windowTop, windowRight, windowBottom, paint);
 
-        // Рисуем решетку на окне
+        // Рисуем решетку на квадратном окне
         paint.setColor(Color.BLACK);
         paint.setStrokeWidth(3);
         int gridSize = 20;
@@ -57,6 +57,24 @@ public class MyCustomView extends View {
         }
         for (int i = windowTop; i <= windowBottom; i += gridSize) {
             canvas.drawLine(windowLeft, i, windowRight, i, paint);
+        }
+
+        // Рисуем круглое окно слева от двери
+        paint.setColor(Color.DKGRAY);
+        int circleCenterX = houseLeft + 80; // Центр по X
+        int circleCenterY = houseTop + 200; // Центр по Y (ниже крыши)
+        int circleRadius = 50;
+        canvas.drawCircle(circleCenterX, circleCenterY, circleRadius, paint);
+
+        // Рисуем решетку на круглом окне
+        paint.setColor(Color.BLACK);
+        paint.setStrokeWidth(3);
+        for (int angle = 0; angle < 360; angle += 30) {
+            float startX = circleCenterX + circleRadius * (float) Math.cos(Math.toRadians(angle));
+            float startY = circleCenterY + circleRadius * (float) Math.sin(Math.toRadians(angle));
+            float endX = circleCenterX + (circleRadius - 50) * (float) Math.cos(Math.toRadians(angle));
+            float endY = circleCenterY + (circleRadius - 50) * (float) Math.sin(Math.toRadians(angle));
+            canvas.drawLine(startX, startY, endX, endY, paint);
         }
 
         // Рисуем дверь
